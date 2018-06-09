@@ -1,0 +1,7 @@
+index:
+    path: /
+    controller: App\Controller\DefaultController::index
+
+update:
+    path: /update
+    controller: App\Controller\NewsManagementController::updateAction

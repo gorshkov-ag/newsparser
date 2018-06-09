@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}News her{% endblock %}</title>
+        {% block stylesheets %}
+            <link href="{{ asset('/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet"/>
+            <link href="{{ asset('/css/bootstrap-greed.min.css') }}" type="text/css" rel="stylesheet"/>
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}
+            {% block header %}
+                <nav class="navbar sticky-top navbar-light bg-light mb-4">
+                    <a class="navbar-brand" href="{{ path('index') }}">News here</a>
+                </nav>
+            {% endblock %}
+
+            {% block mainblock %}
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-8">
+                            {{ form_start(form, {'attr' : {'class' : 'form-inline'}}) }}
+                            {{ form_widget(form.sortField, {'attr': {'class': 'form-control mb-2 mr-sm-2', 'onchange' : 'this.form.submit()'}}) }}
+                            {{ form_widget(form.dateFrom, {'attr': {'class': 'form-control mb-2 mr-sm-2', 'placeholder' : '10.06.2018 10:48'}}) }}
+                            {{ form_widget(form.dateTo, {'attr': {'class': 'form-control mb-2 mr-sm-2', 'placeholder' : '10.06.2018 10:48'}}) }}
+                            {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary mb-2'}}) }}
+                            {{ form_errors(form) }}
+                            {{ form_rest(form) }}
+                            {{ form_end(form) }}
+                        </div>
+                        <div class="col-4"><a class="btn btn-primary float-right" href="{{ path('update') }}" role="button">Обновить список новостей</a></div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Сайт</th>
+                                    <th>Заголовок</th>
+                                    <th>Дата публикации</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for news_item in news_items %}
+                                    <tr>
+                                        <td>{{ site.getName() }}</td>
+                                        <td><a href="{{ news_item.getLink() }}">{{ news_item.getTitle() }}</a></td>
+                                        <td>{{ news_item.getPubDate() | date }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% endblock %}
+
+        {% endblock %}
+        {% block javascripts %}
+            <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
+        {% endblock %}
+    </body>
+</html>
